@@ -30,10 +30,20 @@ class MCPServer:
                         data = json.loads(msg.data)
                         resource = data.get("resource")
                         args = data.get("args", [])
+                        kwargs = data.get("kwargs", {})
+                        stream = data.get("stream", False)
+                        
                         logging.info(f"Received request for resource: {resource} with args: {args}")
+                        
                         if resource in self.resources:
-                            result = await self.resources[resource](*args)
-                            await ws.send_json({"result": result})
+                            if stream:
+                                # Handle streaming response
+                                async for chunk in self.resources[resource](*args, **kwargs):
+                                    await ws.send_json({"chunk": chunk})
+                                await ws.send_json({"done": True})
+                            else:
+                                result = await self.resources[resource](*args, **kwargs)
+                                await ws.send_json({"result": result})
                         else:
                             logging.warning(f"Resource {resource} not found")
                             await ws.send_json({"error": f"Resource {resource} not found"})
@@ -78,7 +88,7 @@ class MCPServer:
             loop.close()
 
     def start_cloud(self):
-        self.endpoint = "wss://ezmcp-cloud.example.com"
+        self.endpoint = "wss://aipaze-cloud.example.com"
         logging.info(f"Using cloud endpoint: {self.endpoint}")
 
     async def _start_server(self):

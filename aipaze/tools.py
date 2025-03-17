@@ -1,7 +1,7 @@
 import inspect
 import json
 import logging
-import asyncio  # Add this import
+import asyncio
 from typing import Callable, Dict, List, Any, Optional
 
 class ToolRegistry:
@@ -12,6 +12,11 @@ class ToolRegistry:
         """Register a tool with the registry"""
         if description is None:
             description = func.__doc__ or f"Tool for {name}"
+        else:
+            # If both description and docstring are provided, use description
+            # and update the function's docstring to match
+            if func.__doc__ is None:
+                func.__doc__ = description
         
         # Get function signature for parameters
         sig = inspect.signature(func)
@@ -46,7 +51,7 @@ class ToolRegistry:
             "parameters": parameters
         }
         
-        logging.info(f"Registered tool: {name}")
+        logging.info(f"Registered tool: {name} with description: {description[:50]}...")
         return func
     
     def get_tool(self, name: str) -> Optional[Callable]:
@@ -94,7 +99,13 @@ class ToolRegistry:
 _registry = ToolRegistry()
 
 def tool(name: str = None, description: str = None):
-    """Decorator to register a tool"""
+    """
+    Decorator to register a tool.
+    
+    Args:
+        name: The name of the tool (optional, defaults to function name)
+        description: A description of what the tool does and when to use it
+    """
     def decorator(func):
         nonlocal name
         if name is None:

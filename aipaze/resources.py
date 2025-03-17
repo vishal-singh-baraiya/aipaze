@@ -17,14 +17,16 @@ class ResourceManager:
         if name not in self.resources:
             raise ValueError(f"Resource '{name}' not found")
             
-        async def wrapper(*args):
+        async def wrapper(*args, **kwargs):
             try:
                 func = self.resources[name]
-                result = func(*args)
+                result = func(*args, **kwargs)
                 
                 # Handle both synchronous and asynchronous functions
                 if asyncio.iscoroutine(result):
                     result = await result
+                    
+                # No handling for generators here to avoid the syntax error
                 return result
             except Exception as e:
                 logging.error(f"Error executing resource {name}: {str(e)}")
@@ -36,7 +38,11 @@ class ResourceManager:
         result = None
         for resource, args in steps:
             if result is not None:
-                args = [result] + args
+                if isinstance(args, list):
+                    args = [result] + args
+                else:
+                    kwargs = {"input": result}
+                    
             callable_func = await self.get_callable(resource)
             result = await callable_func(*args)
         return result

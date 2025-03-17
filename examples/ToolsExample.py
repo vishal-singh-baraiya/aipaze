@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Start the server
 server.start_local()
 
-# Register tools with VERY SPECIFIC descriptions
+# Register tools with specific descriptions
 @tool("get_weather", "Get current weather information for a specific city. ONLY use this for weather queries.")
 def get_weather(city: str) -> dict:
     """Get current weather information for the specified city. Only use for weather-related questions."""
@@ -70,7 +70,6 @@ def ask():
         logging.error(f"Error processing prompt: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-# Health check endpoint
 @app.route("/health", methods=["GET"])
 def health_check():
     tool_registry = get_tool_registry()

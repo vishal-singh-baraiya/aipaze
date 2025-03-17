@@ -9,7 +9,6 @@ This library enables developers to create AI applications that can:
 - Connect to various LLM providers (OpenAI, local models, etc.)
 - Access external tools and data sources
 - Maintain conversation memory
-- Stream responses for better user experience
 - Validate inputs and outputs
 - Build complex workflows
 - Implement retrieval-augmented generation (RAG)
@@ -52,14 +51,6 @@ print(weather)
 # Let the LLM decide which tool to use
 response = client.query_with_tools("What's the weather in San Francisco and what's 25 * 34?")
 print(response)
-```
-
-### Streaming Responses
-
-```python
-# Stream responses from a tool call
-async for chunk in client.stream_query_with_tools("What's the weather in London?"):
-    print(chunk, end="", flush=True)
 ```
 
 ## Core Concepts
@@ -157,19 +148,6 @@ response = client.query_with_tools(
     tools=None,       # Optional list of tool names to restrict to
     memory=None       # Optional memory object for context
 )
-```
-
-#### `client.stream_query_with_tools()`
-
-Stream the response from an LLM with tool support.
-
-```python
-async for chunk in client.stream_query_with_tools(
-    prompt,           # User query
-    tools=None,       # Optional list of tool names to restrict to
-    memory=None       # Optional memory object for context
-):
-    print(chunk, end="")
 ```
 
 ### Resource Management
@@ -419,7 +397,6 @@ except Exception as e:
 
 ### Resource Usage Optimization
 
-- Use streaming for long responses
 - Monitor token usage with metrics
 - Implement caching for frequent queries
 
@@ -512,6 +489,15 @@ OpenAI API error: 401 Unauthorized
 - Use `client.direct_call()` to bypass the WebSocket for troubleshooting
 - Check the server logs for errors
 
+## Future Features
+
+In future versions, we plan to add:
+
+1. **Streaming Support**: For real-time response generation
+2. **Advanced Caching**: To improve performance and reduce API costs
+3. **More Adapters**: For additional LLM providers
+4. **Web Interface**: For easier debugging and testing
+
 ## Contributing
 
 We welcome contributions to AIPaze! Please see our [contributing guidelines](CONTRIBUTING.md) for more information.
@@ -523,4 +509,4 @@ AIPaze is released under the MIT License. See [LICENSE](LICENSE) for details.
 
 
 
-This documentation provides a comprehensive overview of the AIPaze library, its features, and how to use them. For more detailed information, please refer to the source code or reach out to the maintainers.
+## Made with ❤️ by Vishal Singh Baraiya
