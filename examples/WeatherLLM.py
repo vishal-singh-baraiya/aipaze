@@ -29,7 +29,7 @@ def get_weather(city: str) -> dict:
     
     logging.info(f"Extracted city name: {city}")
     
-    api_key = "98981aba6b80e87797a5b950cee0eccc"
+    api_key = "weather api key"
     if not api_key:
         return {"error": "Weather API key not set"}
 
@@ -70,7 +70,7 @@ start_server()
 client = connect(
     endpoint=SERVER_ENDPOINT,  # Use the stored endpoint
     model="gemma2-9b-it",
-    api_key="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",
+    api_key="api key of groq",
     base_url="https://api.groq.com/openai/v1"
 )
 

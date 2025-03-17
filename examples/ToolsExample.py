@@ -19,7 +19,7 @@ server.start_local()
 @tool("get_weather", "Get current weather information for a specific city. ONLY use this for weather queries.")
 def get_weather(city: str) -> dict:
     """Get current weather information for the specified city. Only use for weather-related questions."""
-    api_key = "98981aba6b80e87797a5b950cee0eccc"
+    api_key = "api key of weather"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     
     response = requests.get(url, timeout=10)
@@ -49,7 +49,7 @@ def calculate(expression: str) -> dict:
 # Connect to LLM
 client = connect(
     model="gemma2-9b-it",
-    api_key="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",
+    api_key="api of groq",
     base_url="https://api.groq.com/openai/v1"
 )
 

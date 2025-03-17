@@ -29,8 +29,8 @@ except ImportError:
     sys.exit(1)
 
 # Configuration
-API_KEY = "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"
-WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY", "98981aba6b80e87797a5b950cee0eccc")
+API_KEY = "api key of llm provider"
+WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY", "apikey of weather")
 MODEL = os.environ.get("LLM_MODEL", "gemma2-9b-it")
 
 # Start the AIPaze server
