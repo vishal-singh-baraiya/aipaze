@@ -10,6 +10,7 @@ from .utils import retry
 from .resources import ResourceManager
 from .tools import get_tool_registry
 from .middleware import apply_middleware
+from .memory import Memory
 
 class MCPClient:
     def __init__(self, llm, endpoint: str, resources: ResourceManager = None):
