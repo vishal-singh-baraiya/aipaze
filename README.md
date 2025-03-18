@@ -500,7 +500,7 @@ In future versions, we plan to add:
 
 ## Contributing
 
-We welcome contributions to AIPaze! Please see our [contributing guidelines](CONTRIBUTING.md) for more information.
+We welcome contributions to AIPaze! Please see our [contributing guidelines](CONTRIBUTE.md) for more information.
 
 ## License
 
